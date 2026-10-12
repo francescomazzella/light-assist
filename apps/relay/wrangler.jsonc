@@ -1,0 +1,17 @@
+// The signaling relay: a Cloudflare Worker that passes the few small messages which set a session up
+// between a sharer's agent and a helper's browser. Nothing of the session itself goes through it.
+{
+  "name": "light-assist-relay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "durable_objects": {
+    "bindings": [{ "name": "ROOMS", "class_name": "Room" }]
+  },
+  // SQLite-backed, which is the kind of Durable Object the free plan includes.
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
+  "vars": {
+    // The sites whose pages may connect as a helper, separated by commas. The hosted helper page's
+    // address goes here; a page on any other site is refused.
+    "HELPER_ORIGINS": "https://assist.mazzella.dev"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@light-assist/agent-rs",
+  "private": true,
+  "scripts": {
+    "dev": "cargo run -- --headless",
+    "start": "cargo run --release"
+  }
+}

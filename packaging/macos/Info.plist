@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  The Mac app's description of itself. The values in braces are filled in by scripts/package-macos.sh:
+  the identifier is the app's name to macOS, which remembers what the user allowed it under that name,
+  and the version comes from apps/agent-rs/Cargo.toml.
+-->
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>Light Assist</string>
+    <key>CFBundleDisplayName</key>
+    <string>Light Assist</string>
+    <key>CFBundleIdentifier</key>
+    <string>{Identifier}</string>
+    <key>CFBundleExecutable</key>
+    <string>light-assist</string>
+    <key>CFBundleIconFile</key>
+    <string>light-assist</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleShortVersionString</key>
+    <string>{Version}</string>
+    <key>CFBundleVersion</key>
+    <string>{Version}</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.utilities</string>
+    <!-- The system's sound comes with the screen from macOS 13 on. -->
+    <key>LSMinimumSystemVersion</key>
+    <string>13.0</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSHumanReadableCopyright</key>
+    <string>Francesco Mazzella</string>
+    <!-- The app's own window loads its page from this computer, over plain HTTP. -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
+    <!-- Shown when macOS asks whether the app may reach the local network, which is where helpers are. -->
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Light Assist lets an assistant on your network connect, and only while you are requesting assistance.</string>
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_http._tcp</string>
+    </array>
+</dict>
+</plist>

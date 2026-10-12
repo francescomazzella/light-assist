@@ -1,0 +1,11 @@
+[workspace]
+members = ["apps/agent-rs"]
+resolver = "2"
+
+# Size-first release build: the agent should stay a few MB.
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

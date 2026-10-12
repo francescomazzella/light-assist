@@ -1,0 +1,28 @@
+{
+  "name": "light-assist",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "pnpm --parallel --filter @light-assist/ui --filter @light-assist/agent-rs run dev",
+    "build": "pnpm --filter @light-assist/ui build",
+    "start": "pnpm build && pnpm --filter @light-assist/agent-rs start",
+    "typecheck": "tsc --noEmit && tsc -p apps/relay && node scripts/check-i18n.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "AGPL-3.0-or-later",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.9.1",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@12.9.1",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "typescript": "^7.0.2"
+  }
+}

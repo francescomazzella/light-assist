@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f3f4ef" />
+    <title>Light Assist · Privacy</title>
+    <style>
+      :root { color-scheme: light dark; --bg: #f3f4ef; --text: #1d201d; --muted: #5d665c; --line: #d9ddd4; --accent: #b4472e; }
+      @media (prefers-color-scheme: dark) { :root { --bg: #171a17; --text: #e7eae5; --muted: #9aa398; --line: #333a34; --accent: #e58a72; } }
+      body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+      main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+      h1 { margin: 0 0 0.25rem; font-size: 1.75rem; line-height: 1.2; }
+      h2 { margin: 2.25rem 0 0.5rem; font-size: 1.15rem; }
+      p, li { color: var(--text); }
+      .lead { color: var(--muted); margin-top: 0; }
+      .short { margin: 1.5rem 0; padding: 1rem 1.25rem; border: 1px solid var(--line); border-radius: 10px; }
+      .short p { margin: 0.35rem 0; }
+      ul { padding-left: 1.25rem; }
+      li { margin: 0.3rem 0; }
+      a { color: var(--accent); }
+      table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.95rem; }
+      th, td { padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+      th { color: var(--muted); font-weight: 600; }
+      footer { margin-top: 3rem; color: var(--muted); font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Light Assist e la tua privacy</h1>
+      <p class="lead">Ultimo aggiornamento: 11 ottobre 2026 · <a href="/privacy">English</a></p>
+
+      <div class="short">
+        <p><strong>In breve.</strong> Light Assist non ha account, pubblicità né strumenti di analisi.</p>
+        <p>Ciò che una persona mostra a un'altra (lo schermo, l'audio, mouse e tastiera, il testo copiato, un terminale) viaggia direttamente tra i loro due computer, cifrato, e non passa mai da qualcosa di nostro.</p>
+        <p>Per aiutare i due computer a trovarsi, un piccolo relay vede i loro indirizzi di rete e il nome della richiesta di assistenza per il tempo in cui vi restano connessi. Non conserva nulla.</p>
+      </div>
+
+      <h2>Chi è il titolare</h2>
+      <p>
+        Light Assist è realizzato da Francesco Mazzella, sviluppatore individuale in Italia. Per qualsiasi domanda su questa
+        informativa o sui tuoi dati, scrivi a <a href="mailto:privacy@mazzella.dev">privacy@mazzella.dev</a>.
+      </p>
+
+      <h2>Cosa succede e dove</h2>
+
+      <h3>Tra i due computer</h3>
+      <p>
+        Una sessione collega direttamente il computer di chi condivide e il browser dell'assistente, su una rete locale o su una rete Tailscale che
+        hanno in comune. Tutto ciò che riguarda la sessione passa da quel collegamento, cifrato da un capo all'altro:
+      </p>
+      <ul>
+        <li>l'immagine dello schermo di chi condivide e l'audio riprodotto dal suo computer;</li>
+        <li>mouse e tastiera dell'assistente, quando chi condivide ha consentito il controllo;</li>
+        <li>il testo copiato da uno dei due, mentre chi condivide ha consentito il controllo e non ha disattivato questa funzione;</li>
+        <li>ciò che viene scritto e mostrato in un terminale, quando chi condivide ne ha consentito uno.</li>
+      </ul>
+      <p>Nulla di tutto questo arriva a noi o a chiunque altro, e nulla viene registrato da Light Assist.</p>
+
+      <h3>Sul computer di chi condivide</h3>
+      <p>L'app conserva due piccoli file nella cartella dell'utente, che non lasciano mai il computer:</p>
+      <ul>
+        <li>le sue impostazioni;</li>
+        <li>
+          se l'accesso non presidiato è attivo: i dispositivi considerati attendibili, ciascuno con il nome che gli è stato dato, un segreto che gli
+          consente di connettersi, e le date in cui è stato aggiunto e usato l'ultima volta.
+        </li>
+      </ul>
+      <p>Rimuovere un dispositivo attendibile dalle impostazioni lo cancella. Disinstallare l'app su Windows rimuove entrambi i file; su Mac si trovano in <code>~/Library/Application Support/light-assist</code>.</p>
+      <p>Mentre chi condivide sta richiedendo assistenza (e, con l'accesso non presidiato attivo, finché esiste un dispositivo attendibile), il computer risponde sulla propria rete locale al suo indirizzo di assistenza.</p>
+
+      <h3>Nel browser dell'assistente</h3>
+      <p>La pagina aperta dall'assistente conserva alcune cose nello spazio di archiviazione del browser per quel sito, che non ci vengono inviate:</p>
+      <ul>
+        <li>le preferenze dell'assistente (qualità dell'immagine, audio, opzioni della tastiera, lingua);</li>
+        <li>se chi condivide ha reso attendibile questo browser: il segreto che gli consente di connettersi al computer di quella persona.</li>
+      </ul>
+      <p>La pagina non imposta cookie. Cancellare i dati del sito nel browser rimuove tutto; un dispositivo attendibile può anche rinunciare a esserlo dal menu della pagina.</p>
+
+      <h3>Il sito e il relay</h3>
+      <p>
+        Quando l'assistente usa la pagina su <code>assist.mazzella.dev</code>, la pagina è distribuita da Cloudflare, e il browser dell'assistente e
+        l'app di chi condivide si connettono ciascuno a un relay, anch'esso su Cloudflare, per poter stabilire il loro collegamento diretto. Dal
+        relay passano:
+      </p>
+      <table>
+        <tr><th>Cosa</th><th>Perché</th></tr>
+        <tr><td>L'indirizzo di rete (IP) di ciascuna parte</td><td>Senza non è possibile stabilire una connessione. L'indirizzo dell'assistente viene anche mostrato a chi condivide, perché veda da dove si sta connettendo chi lo assiste.</td></tr>
+        <tr><td>Il nome della richiesta di assistenza (le parole dell'indirizzo)</td><td>Per mettere in contatto le due persone giuste.</td></tr>
+        <tr><td>I messaggi che preparano la connessione: le richieste di accesso e le relative risposte, e i dettagli tecnici della connessione, compresi gli indirizzi sulla rete locale e le impronte dei certificati di cifratura delle due parti</td><td>Per stabilire il collegamento diretto, e per garantire che sia con il computer giusto.</td></tr>
+      </table>
+      <p>
+        Il relay li inoltra e li dimentica: non ha un database e non ne tiene registri. Il codice di abbinamento non passa mai dal relay; ciascuna
+        parte lo calcola per conto proprio. Nulla della sessione vera e propria (schermo, audio, input, appunti, terminale) passa dal relay o dal sito.
+      </p>
+      <p>
+        Cloudflare, in quanto fornitore di entrambi, tratta i dati tecnici che tratta qualsiasi servizio di hosting (come gli indirizzi IP e l'ora di
+        una richiesta) secondo le proprie condizioni; vedi l'<a href="https://www.cloudflare.com/privacypolicy/">informativa sulla privacy di Cloudflare</a>.
+        Cloudflare opera in tutto il mondo, quindi questi dati possono essere trattati al di fuori del tuo paese, con le garanzie lì descritte.
+      </p>
+      <p>Un assistente che usa la pagina servita dal computer stesso di chi condivide, sulla rete locale, non tocca affatto né il sito né il relay.</p>
+
+      <h3>Controllo della versione più recente</h3>
+      <p>
+        Una copia dell'app non installata dal Microsoft Store chiede al sito, quando si apre la sua finestra e ogni poche ore finché resta aperta,
+        quale sia la versione più recente. Come qualsiasi richiesta a un sito, parte dall'indirizzo del tuo computer; non contiene altro e non viene conservata.
+      </p>
+
+      <h3>Da dove hai ottenuto l'app</h3>
+      <p>Se installi Light Assist dal Microsoft Store, è Microsoft a gestire il download e gli aggiornamenti, secondo la propria informativa. Noi non riceviamo nulla su chi installa l'app, a parte i totali che lo Store mostra a ogni sviluppatore.</p>
+
+      <h2>Su quale base</h2>
+      <p>
+        In base alla normativa europea sulla protezione dei dati (il GDPR), il poco che passa dal relay e dal sito viene trattato perché è necessario a
+        fornire ciò che hai chiesto, una connessione tra due computer, e per nessun altro scopo. Non vendiamo dati, non li condividiamo a fini
+        pubblicitari e non creiamo profili.
+      </p>
+
+      <h2>Per quanto tempo si conserva qualcosa</h2>
+      <p>Da parte nostra: per niente. Il relay tiene ciò che vede solo finché la connessione verso di esso è aperta. Ciò che si trova sul tuo computer o nel tuo browser resta finché non lo rimuovi, come descritto sopra.</p>
+
+      <h2>I tuoi diritti</h2>
+      <p>
+        Questi diritti derivano dal Regolamento generale sulla protezione dei dati dell'UE (GDPR), che si applica in ogni paese dell'Unione. Puoi
+        chiedere quali dati su di te conserviamo, e farli correggere o cancellare; puoi opporti al loro uso; e puoi presentare un reclamo all'autorità
+        per la protezione dei dati del paese in cui vivi (<a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_it">l'elenco dell'UE</a>).
+        La nostra è quella italiana, il <a href="https://www.garanteprivacy.it/">Garante per la protezione dei dati personali</a>. Poiché non
+        conserviamo nulla che ti identifichi, di solito non ci sarà nulla da inviare o cancellare, e te lo diremo.
+      </p>
+
+      <h2>Minori</h2>
+      <p>Light Assist è uno strumento per assistere qualcuno con il suo computer. Non è rivolto ai minori e non raccoglie nulla da nessuno.</p>
+
+      <h2>Modifiche</h2>
+      <p>Se cambia ciò che Light Assist fa con i dati, questa pagina viene aggiornata per prima, e con essa la data in alto.</p>
+
+      <footer>Light Assist · <a href="/">Assisti qualcuno</a></footer>
+    </main>
+  </body>
+</html>

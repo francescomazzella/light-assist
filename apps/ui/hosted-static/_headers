@@ -1,0 +1,6 @@
+# Cloudflare Pages' rules for the website's own files.
+# The newest version is asked for by the app from its own window, a page on another address, and must
+# never be answered from a cache.
+/version.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-cache
