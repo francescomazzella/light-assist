@@ -494,7 +494,7 @@ onUnmounted(() => {
       <h2 id="get-title" class="card-title">{{ t("Need assistance yourself?") }}</h2>
       <p class="text">{{ t("Install Light Assist on the computer that needs it. Whoever assists you needs only a browser.") }}</p>
       <div class="downloads">
-        <a v-for="download in downloads()" :key="download.name" class="action-button" :href="download.url" rel="noopener">
+        <a v-for="download in downloads()" :key="download.name" class="action-button" :href="download.url" target="_blank" rel="noopener">
           {{ download.name }}<span class="download-note">{{ download.note }}</span>
         </a>
       </div>

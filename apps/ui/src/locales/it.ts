@@ -221,10 +221,9 @@ export const it: Catalog = {
   "Try again": "Riprova",
   "Need assistance yourself?": "Ti serve assistenza?",
   "Install Light Assist on the computer that needs it. Whoever assists you needs only a browser.": "Installa Light Assist sul computer che ne ha bisogno. A chi ti assiste basta un browser.",
-  "Windows, kept up to date": "Windows, sempre aggiornato",
-  "Without the Store": "Senza lo Store",
-  "Windows 10 and 11": "Windows 10 e 11",
-  "macOS 13 or later, Apple silicon": "macOS 13 o successivo, Apple silicon",
+  "From the Microsoft Store": "Dal Microsoft Store",
+  "Windows 10 and 11, from the latest release": "Windows 10 e 11, dall'ultima versione pubblicata",
+  "Built on your Mac: see how": "Da compilare sul tuo Mac: ecco come",
   Privacy: "Privacy",
 
   // The page the assistant opens: why a session did not start, or ended

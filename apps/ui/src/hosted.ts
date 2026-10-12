@@ -40,17 +40,19 @@ export function signalingUrl(device: string | null) {
 
 /**
  * Where to get the app, for someone who reached the website wanting assistance and not to give it.
- * The files are the ones attached to the latest release, under names that do not change from one
- * version to the next; the Store's address is set once there is a listing (`VITE_STORE_URL`).
+ * Pages that say how, never a file straight away: the Windows app comes from the Store once there is a
+ * listing (`VITE_STORE_URL`) and otherwise from the latest release's page, and the Mac app is built on
+ * the Mac it is for, signed with its owner's certificate, as the repository's README explains.
  */
-const releases = ((import.meta.env.VITE_DOWNLOADS_URL as string | undefined) ?? "https://github.com/francescomazzella/light-assist/releases/latest/download").replace(/\/$/, "");
+const repository = ((import.meta.env.VITE_REPOSITORY_URL as string | undefined) ?? "https://github.com/francescomazzella/light-assist").replace(/\/$/, "");
 const store = (import.meta.env.VITE_STORE_URL as string | undefined) ?? "";
 
 /** Named when they are shown, so that they are in the reader's language. */
 export const downloads = (): { name: string; note: string; url: string }[] => [
-  ...(store ? [{ name: "Microsoft Store", note: t("Windows, kept up to date"), url: store }] : []),
-  { name: "Windows", note: store ? t("Without the Store") : t("Windows 10 and 11"), url: `${releases}/LightAssist-Windows.exe` },
-  { name: "Mac", note: t("macOS 13 or later, Apple silicon"), url: `${releases}/LightAssist-macOS.zip` },
+  store
+    ? { name: "Windows", note: t("From the Microsoft Store"), url: store }
+    : { name: "Windows", note: t("Windows 10 and 11, from the latest release"), url: `${repository}/releases/latest` },
+  { name: "Mac", note: t("Built on your Mac: see how"), url: `${repository}#on-a-mac` },
 ];
 
 /** This page's build, to tell it from a newer one on the website. */
