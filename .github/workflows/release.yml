@@ -1,6 +1,8 @@
-# Builds the app for Windows and for a Mac and attaches both to a release, whenever a version tag
-# arrives in the public repository. The files get the names the
-# website's download buttons ask for, which do not change from one version to the next.
+# Builds the app for Windows and attaches it to a release, whenever a version tag arrives in the public
+# repository. The file's name does not change from one version to the next.
+#
+# There is no Mac build here: a Mac lets an app see the screen only if someone has signed it, so the
+# Mac app is built on the Mac it runs on, with its owner's certificate (scripts/install-macos.sh).
 #
 # The addresses of the relay and of the hosted helper page are repository variables (Settings →
 # Secrets and variables → Actions → Variables): LIGHT_ASSIST_RELAY_URL and LIGHT_ASSIST_PAGE_URL.
@@ -38,22 +40,3 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: LightAssist-Windows.exe
-
-  macos:
-    if: ${{ !github.event.repository.private }}
-    # An Apple silicon Mac. The app is signed for nobody in particular, so a Mac opens it only once its
-    # user allows it in Privacy & Security; scripts/install-macos.sh builds a copy signed by its user.
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-      - run: rustup update stable --no-self-update
-      - run: pnpm install --frozen-lockfile
-      - run: sh scripts/package-macos.sh
-      - uses: softprops/action-gh-release@v2
-        with:
-          files: target/macos/LightAssist-macOS.zip
