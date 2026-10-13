@@ -8,6 +8,8 @@ coverage/
 .env
 .env.*
 !.env.example
+# The published helper page's settings, which are public anyway.
+!apps/ui/.env.hosted
 
 # Logs
 *.log

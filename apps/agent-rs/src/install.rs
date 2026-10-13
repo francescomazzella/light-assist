@@ -96,12 +96,12 @@ pub fn started_at_login() -> bool {
 /// quits this one straight after, so that the new copy can take over.
 pub fn install() -> Result<(), String> {
     if cfg!(target_os = "macos") {
-        return Err(crate::lang::tr("On a Mac, drag Light Assist to the Applications folder.", "Su un Mac, trascina Light Assist nella cartella Applicazioni.").to_owned());
+        return Err(crate::lang::tr("On a Mac, drag Light Assist to the Applications folder.", "Su un Mac, trascina Light Assist nella cartella Applicazioni.", "En un Mac, arrastra Light Assist a la carpeta Aplicaciones.").to_owned());
     }
     if installation() != Installation::Portable {
-        return Err(crate::lang::tr("Light Assist is already installed.", "Light Assist è già installato.").to_owned());
+        return Err(crate::lang::tr("Light Assist is already installed.", "Light Assist è già installato.", "Light Assist ya está instalado.").to_owned());
     }
-    let folder = install_folder().ok_or(crate::lang::tr("The user's program folder could not be found.", "Non è stato possibile trovare la cartella dei programmi dell'utente."))?;
+    let folder = install_folder().ok_or(crate::lang::tr("The user's program folder could not be found.", "Non è stato possibile trovare la cartella dei programmi dell'utente.", "No se ha encontrado la carpeta de programas del usuario."))?;
     let installed = folder.join(EXE_NAME);
     let current = std::env::current_exe().map_err(|error| error.to_string())?;
 
@@ -226,11 +226,11 @@ mod os {
         }
         match startup_task().and_then(|task| task.State()) {
             Ok(StartupTaskState::Enabled) => (true, None),
-            Ok(StartupTaskState::EnabledByPolicy) => (true, Some(crate::lang::tr("Set by your organization.", "Impostato dalla tua organizzazione.").to_owned())),
-            Ok(StartupTaskState::DisabledByPolicy) => (false, Some(crate::lang::tr("Turned off by your organization.", "Disattivato dalla tua organizzazione.").to_owned())),
+            Ok(StartupTaskState::EnabledByPolicy) => (true, Some(crate::lang::tr("Set by your organization.", "Impostato dalla tua organizzazione.", "Configurado por tu organización.").to_owned())),
+            Ok(StartupTaskState::DisabledByPolicy) => (false, Some(crate::lang::tr("Turned off by your organization.", "Disattivato dalla tua organizzazione.", "Desactivado por tu organización.").to_owned())),
             Ok(StartupTaskState::DisabledByUser) => (
                 false,
-                Some(crate::lang::tr("Turned off in Task Manager's Startup apps. Turn it back on there.", "Disattivato in Gestione attività, App di avvio. Riattivalo da lì.").to_owned()),
+                Some(crate::lang::tr("Turned off in Task Manager's Startup apps. Turn it back on there.", "Disattivato in Gestione attività, App di avvio. Riattivalo da lì.", "Desactivado en Administrador de tareas, Aplicaciones de arranque. Vuelve a activarlo allí.").to_owned()),
             ),
             Ok(_) => (false, None),
             Err(error) => (false, Some(format!("Not available: {}", error.message()))),
@@ -401,14 +401,14 @@ mod os {
     }
 
     pub fn set_startup(_installation: Installation, on: bool) -> Result<(), String> {
-        let path = launch_agent().ok_or(crate::lang::tr("Your home folder could not be found.", "Non è stato possibile trovare la tua cartella Inizio."))?;
+        let path = launch_agent().ok_or(crate::lang::tr("Your home folder could not be found.", "Non è stato possibile trovare la tua cartella Inizio.", "No se ha encontrado tu carpeta de inicio."))?;
         if !on {
             return match std::fs::remove_file(&path) {
                 Err(error) if error.kind() != std::io::ErrorKind::NotFound => Err(error.to_string()),
                 _ => Ok(()),
             };
         }
-        let contents = property_list().ok_or(crate::lang::tr("Light Assist could not tell where it is running from.", "Light Assist non è riuscito a capire da dove è in esecuzione."))?;
+        let contents = property_list().ok_or(crate::lang::tr("Light Assist could not tell where it is running from.", "Light Assist non è riuscito a capire da dove è in esecuzione.", "Light Assist no ha podido saber desde dónde se está ejecutando."))?;
         path.parent().map_or(Ok(()), std::fs::create_dir_all).and_then(|()| std::fs::write(&path, contents)).map_err(|error| error.to_string())
     }
 
@@ -425,7 +425,7 @@ mod os {
         false
     }
     pub fn register(_exe: &Path, _folder: &Path) -> Result<(), String> {
-        Err(crate::lang::tr("On a Mac, drag Light Assist to the Applications folder.", "Su un Mac, trascina Light Assist nella cartella Applicazioni.").to_owned())
+        Err(crate::lang::tr("On a Mac, drag Light Assist to the Applications folder.", "Su un Mac, trascina Light Assist nella cartella Applicazioni.", "En un Mac, arrastra Light Assist a la carpeta Aplicaciones.").to_owned())
     }
     pub fn unregister() {}
     pub fn stop_others_in(_folder: &Path) {}

@@ -498,7 +498,10 @@ onUnmounted(() => {
           {{ download.name }}<span class="download-note">{{ download.note }}</span>
         </a>
       </div>
-      <p class="text"><a class="link-button" :href="language === 'it' ? '/privacy-it' : '/privacy'">{{ t("Privacy") }}</a></p>
+      <p class="text">
+        <a class="link-button" :href="language === 'en' ? '/privacy' : `/privacy-${language}`">{{ t("Privacy") }}</a> ·
+        <a class="link-button" :href="language === 'en' ? '/terms' : `/terms-${language}`">{{ t("Terms of use") }}</a>
+      </p>
     </section>
   </Shell>
 </template>

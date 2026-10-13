@@ -1,5 +1,6 @@
 import { nextTick, onMounted, onUnmounted, ref } from "vue";
 import type { LocalState } from "@light-assist/protocol";
+import { language } from "./i18n.js";
 
 export const state = ref<LocalState>();
 export const online = ref(false);
@@ -113,6 +114,8 @@ export async function checkForUpdates() {
 }
 
 /** Opens one of the app's pages on the website in the person's own browser. */
-export function openWebsite(page: "download" | "privacy" | "source") {
-  void post("/api/open", { page });
+export function openWebsite(page: "download" | "privacy" | "terms" | "source") {
+  // The policy and the terms each have a page in every language the app has.
+  const localized = (page === "privacy" || page === "terms") && language.value !== "en" ? `${page}-${language.value}` : page;
+  void post("/api/open", { page: localized });
 }

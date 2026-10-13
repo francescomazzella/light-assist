@@ -207,7 +207,7 @@ fn open_indicator(
     monitor: Option<MonitorHandle>,
 ) -> Option<(WebView, Window)> {
     let builder = WindowBuilder::new()
-        .with_title(tr("Light Assist is sharing this computer", "Light Assist sta condividendo questo computer"))
+        .with_title(tr("Light Assist is sharing this computer", "Light Assist sta condividendo questo computer", "Light Assist está compartiendo este ordenador"))
         .with_inner_size(LogicalSize::new(INDICATOR_SIZE.0, INDICATOR_SIZE.1))
         .with_decorations(false)
         .with_resizable(false)
@@ -234,14 +234,18 @@ fn open_indicator(
 
     // The helper is shown the sharer's screen, not this app's own notice about it. On a Mac the screen
     // capture leaves it out, knowing it as the app's one window that floats above the others.
+    // `LIGHT_ASSIST_SCREENSHOTS` leaves it in, for taking pictures of the app: Windows otherwise keeps
+    // it out of every capture, the Snipping Tool's included.
     #[cfg(windows)]
-    unsafe {
+    if std::env::var_os("LIGHT_ASSIST_SCREENSHOTS").is_none() {
         use tao::platform::windows::WindowExtWindows;
         use windows::Win32::{
             Foundation::HWND,
             UI::WindowsAndMessaging::{SetWindowDisplayAffinity, WDA_EXCLUDEFROMCAPTURE},
         };
-        let _ = SetWindowDisplayAffinity(HWND(window.hwnd() as _), WDA_EXCLUDEFROMCAPTURE);
+        unsafe {
+            let _ = SetWindowDisplayAffinity(HWND(window.hwnd() as _), WDA_EXCLUDEFROMCAPTURE);
+        }
     }
 
     let id = window.id();
@@ -261,7 +265,7 @@ fn app_menu(quit: &MenuItem) -> Option<Menu> {
 
     let app = Submenu::with_items("Light Assist", true, &[&PredefinedMenuItem::hide(None), &PredefinedMenuItem::separator(), quit]).ok()?;
     let edit = Submenu::with_items(
-        tr("Edit", "Modifica"),
+        tr("Edit", "Modifica", "Edición"),
         true,
         &[
             &PredefinedMenuItem::undo(None),
@@ -396,13 +400,13 @@ pub fn run(url: String, key: String, start_hidden: bool, share: impl FnOnce(Desk
     }));
     let proxy = event_loop.create_proxy();
 
-    let open_item = MenuItem::new(tr("Open Light Assist", "Apri Light Assist"), true, None);
-    let quit_item = MenuItem::new(tr("Quit", "Esci"), true, None);
+    let open_item = MenuItem::new(tr("Open Light Assist", "Apri Light Assist", "Abrir Light Assist"), true, None);
+    let quit_item = MenuItem::new(tr("Quit", "Esci", "Salir"), true, None);
     // The same Quit as the tray's, so that it says goodbye on the network too.
     #[cfg(target_os = "macos")]
     let app_quit_item = {
         use tray_icon::menu::accelerator::{Accelerator, Code, Modifiers};
-        MenuItem::new(tr("Quit Light Assist", "Esci da Light Assist"), true, Some(Accelerator::new(Modifiers::META, Code::KeyQ)))
+        MenuItem::new(tr("Quit Light Assist", "Esci da Light Assist", "Salir de Light Assist"), true, Some(Accelerator::new(Modifiers::META, Code::KeyQ)))
     };
     #[cfg(target_os = "macos")]
     let mut app_menu_bar: Option<Menu> = None;
@@ -452,7 +456,7 @@ pub fn run(url: String, key: String, start_hidden: bool, share: impl FnOnce(Desk
                         .collect();
                 }
                 if let Some(tray_icon) = &tray_icon {
-                    let _ = tray_icon.set_tooltip(Some(if sharing { tr("Light Assist: an assistant is connected", "Light Assist: un assistente è connesso") } else { "Light Assist" }));
+                    let _ = tray_icon.set_tooltip(Some(if sharing { tr("Light Assist: an assistant is connected", "Light Assist: un assistente è connesso", "Light Assist: hay un asistente conectado") } else { "Light Assist" }));
                 }
                 (false, false)
             }

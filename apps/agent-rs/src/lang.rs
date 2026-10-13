@@ -4,18 +4,29 @@
 
 use std::sync::OnceLock;
 
-/// Whether this computer's user reads Italian before English, as the system has it.
-fn italian() -> bool {
-    static ITALIAN: OnceLock<bool> = OnceLock::new();
-    *ITALIAN.get_or_init(|| os::language().to_ascii_lowercase().starts_with("it"))
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Language {
+    English,
+    Italian,
+    Spanish,
 }
 
-/// `english`, or `italian` for a reader of Italian.
-pub fn tr(english: &'static str, in_italian: &'static str) -> &'static str {
-    if italian() {
-        in_italian
-    } else {
-        english
+/// The first language of this computer's user, as the system has it, where the app has it.
+fn language() -> Language {
+    static LANGUAGE: OnceLock<Language> = OnceLock::new();
+    *LANGUAGE.get_or_init(|| match os::language().to_ascii_lowercase().get(..2) {
+        Some("it") => Language::Italian,
+        Some("es") => Language::Spanish,
+        _ => Language::English,
+    })
+}
+
+/// The text in the reader's language: `english`, `italian` or `spanish`.
+pub fn tr(english: &'static str, italian: &'static str, spanish: &'static str) -> &'static str {
+    match language() {
+        Language::English => english,
+        Language::Italian => italian,
+        Language::Spanish => spanish,
     }
 }
 
@@ -28,9 +39,10 @@ mod os {
 
     /// The language Windows shows its own menus in, as a two-letter code where it is one the app has.
     pub fn language() -> String {
-        // The low ten bits name the language; 0x10 is Italian, wherever it is spoken.
+        // The low ten bits name the language, wherever it is spoken: 0x10 is Italian, 0x0a Spanish.
         match unsafe { GetUserDefaultUILanguage() } & 0x3ff {
             0x10 => "it",
+            0x0a => "es",
             _ => "en",
         }
         .to_owned()

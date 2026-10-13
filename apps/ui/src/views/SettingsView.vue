@@ -254,7 +254,10 @@ async function save() {
       </dd>
       <template v-if="state?.website">
         <dt>{{ t("Privacy") }}</dt>
-        <dd><button class="link-button" type="button" @click="openWebsite('privacy')">{{ t("Privacy policy") }}</button></dd>
+        <dd>
+          <button class="link-button" type="button" @click="openWebsite('privacy')">{{ t("Privacy policy") }}</button> ·
+          <button class="link-button" type="button" @click="openWebsite('terms')">{{ t("Terms of use") }}</button>
+        </dd>
       </template>
     </dl>
     <p class="text">© 2026 Francesco Mazzella</p>

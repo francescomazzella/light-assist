@@ -1,4 +1,5 @@
 import { defineComponent, ref, watch, type VNodeChild } from "vue";
+import { es } from "./locales/es.js";
 import { it } from "./locales/it.js";
 
 /**
@@ -15,10 +16,10 @@ import { it } from "./locales/it.js";
 /** A language's texts, by the English they stand for. */
 export type Catalog = Record<string, string>;
 
-const catalogs: Record<string, Catalog> = { it };
+const catalogs: Record<string, Catalog> = { it, es };
 
 /** The languages there are, by their own names, for someone choosing one. */
-export const LANGUAGES: Record<string, string> = { en: "English", it: "Italiano" };
+export const LANGUAGES: Record<string, string> = { en: "English", es: "Español", it: "Italiano" };
 
 const SETTING = "light-assist.language";
 

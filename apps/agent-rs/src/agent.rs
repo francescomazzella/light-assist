@@ -214,7 +214,7 @@ impl Agent {
         let address = match (page, website) {
             ("source", _) => SOURCE.to_owned(),
             ("download", Some(website)) => format!("{website}/"),
-            ("privacy", Some(website)) => format!("{website}/privacy"),
+            (page @ ("privacy" | "privacy-it" | "privacy-es" | "terms" | "terms-it" | "terms-es"), Some(website)) => format!("{website}/{page}"),
             _ => return Err(Failure::BadRequest),
         };
         #[cfg(windows)]

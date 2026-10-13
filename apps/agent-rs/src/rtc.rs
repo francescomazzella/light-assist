@@ -342,7 +342,7 @@ impl Awake {
         /// `kIOPMAssertionLevelOn`
         const ON: u32 = 255;
         // Keeping the display on keeps the computer up as well.
-        let (kind, reason) = (Cf::string("PreventUserIdleDisplaySleep"), Cf::string(crate::lang::tr("An assistant is connected to this computer", "Un assistente è connesso a questo computer")));
+        let (kind, reason) = (Cf::string("PreventUserIdleDisplaySleep"), Cf::string(crate::lang::tr("An assistant is connected to this computer", "Un assistente è connesso a questo computer", "Hay un asistente conectado a este ordenador")));
         let mut assertion = 0;
         let made = unsafe { IOPMAssertionCreateWithName(kind.0, ON, reason.0, &mut assertion) } == 0;
         Self(made.then_some(assertion as isize))
@@ -440,7 +440,7 @@ fn wake_screen() {
     /// `kIOPMUserActiveLocal`: someone is at the computer, which turns its display on.
     const AT_THE_COMPUTER: u32 = 0;
 
-    let reason = crate::mac::Cf::string(crate::lang::tr("An assistant is connected to this computer", "Un assistente è connesso a questo computer"));
+    let reason = crate::mac::Cf::string(crate::lang::tr("An assistant is connected to this computer", "Un assistente è connesso a questo computer", "Hay un asistente conectado a este ordenador"));
     let mut assertion = 0;
     if unsafe { IOPMAssertionDeclareUserActivity(reason.0, AT_THE_COMPUTER, &mut assertion) } == 0 {
         // It lasts as long as the display's own timer, and `Awake` takes over from it.

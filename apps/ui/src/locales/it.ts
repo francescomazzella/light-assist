@@ -225,6 +225,7 @@ export const it: Catalog = {
   "Windows 10 and 11, from the latest release": "Windows 10 e 11, dall'ultima versione pubblicata",
   "Built on your Mac: see how": "Da compilare sul tuo Mac: ecco come",
   Privacy: "Privacy",
+  "Terms of use": "Condizioni d'uso",
 
   // The page the assistant opens: why a session did not start, or ended
   "This computer is not requesting assistance right now.": "In questo momento questo computer non sta richiedendo assistenza.",

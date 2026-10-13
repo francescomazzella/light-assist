@@ -170,7 +170,7 @@ async fn app_startup(body: Bytes) -> Response {
 /// Installs this portable copy and hands over to the installed one, which opens its own window.
 async fn app_install(State(agent): Shared) -> Response {
     if agent.busy() {
-        return json_response(StatusCode::OK, &json!({ "ok": false, "message": crate::lang::tr("Stop the request first.", "Annulla prima la richiesta.") }));
+        return json_response(StatusCode::OK, &json!({ "ok": false, "message": crate::lang::tr("Stop the request first.", "Annulla prima la richiesta.", "Cancela primero la solicitud.") }));
     }
     match tokio::task::spawn_blocking(install::install).await {
         Ok(Ok(())) => {
